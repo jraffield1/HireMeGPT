@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Streamlit: Resume Genie",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": [
+        "run",
+        "streamlit_app.py"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}

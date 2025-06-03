@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            margin: 0.4in;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0.4in;
+            font-size: 10pt;
+        }
+        h1 {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 0.2em;
+        }
+        h2 {
+            font-size: 11pt;
+            text-align: center;
+            margin-top: 1.25em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+        }
+        .contact {
+            text-align: center;
+            font-size: 9pt;
+            margin-bottom: 0.5em;
+        }
+        .headline {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 0.2em;
+        }
+        .summary {
+            margin-bottom: 1em;
+        }
+        .job-entry {
+            margin-bottom: 1em;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+        .job-header span:first-child {
+            flex-grow: 1;
+        }
+        ul {
+            padding-left: 1.2em;
+            margin-top: 0.2em;
+        }
+        .education-section {
+            display: flex;
+            justify-content: space-evenly;
+            text-align: center;
+            margin-top: 1em;
+        }
+        .education-item {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<h1><strong>{{ resume.full_name }}</strong></h1>
+<div class="contact">
+    {{ resume.email }} | {{ resume.linkedin }} | {{ resume.phone }}<br>
+    {{ resume.location }}
+</div>
+
+<div class="headline">{{ resume.headline }}</div>
+<p class="summary">{{ resume.summary }}</p>
+
+<h2>Technical Skills</h2>
+<p style="text-align: center;">{{ resume.technical_skills | join(" | ") }}</p>
+
+<h2>Core Competencies</h2>
+<p>{{ resume.core_competencies | join(" | ") }}</p>
+
+<h2>Professional Experience</h2>
+{% for job in resume.work_experience %}
+<div class="job-entry">
+    <div class="job-header">
+        <span><strong>{{ job.company }}</strong>, {{ job.location }}</span>
+        <span>{{ job.dates }}</span>
+    </div>
+    <strong>{{ job.title }}</strong>
+    <ul>
+        {% for item in job.description %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}
+
+<h2>Education</h2>
+<div class="education-section">
+    {% for edu in resume.education %}
+    <div class="education-item">
+        <strong>{{ edu.school }}</strong><br>
+        {{ edu.degree }}
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

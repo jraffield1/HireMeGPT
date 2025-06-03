@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            margin: 0.5in;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+        .header {
+            margin-bottom: 2em;
+        }
+        .contact {
+            font-size: 10pt;
+            margin-top: 0.2em;
+            line-height: 1.4;
+        }
+        .cover-letter p {
+            margin-bottom: 1em;
+        }
+        .signature {
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <strong>{{ resume.full_name }}</strong><br>
+    <div class="contact">
+        {{ resume.email }}<br>
+        {{ resume.phone }}<br>
+        {{ resume.linkedin }}<br>
+        {{ resume.location }}
+    </div>
+</div>
+
+<div class="cover-letter">
+    {% for paragraph in cover_letter.strip().split('\n\n') %}
+        <p style="text-indent:30px;">{{ paragraph }}</p>
+    {% endfor %}
+</div>
+
+<div class="signature">
+    Sincerely,<br>
+    {{ resume.full_name }}
+</div>
+
+</body>
+</html>
