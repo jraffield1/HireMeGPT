@@ -35,11 +35,11 @@ async def get_resume_suggestions(client: OpenAI, jobPosting: JobPosting, resume:
         core_competencies=parsed["core_competencies"],
         work_experience=[
             JobEntry(
-                title=j.get("title", original.title),
-                company=j.get("company", original.company),
-                location=j.get("location", original.location),
-                dates=j.get("dates", original.dates),
-                description=j.get("description", original.description),
+                title=original.title,
+                company=original.company,
+                location=original.location,
+                dates=original.dates,
+                description=j.get("description"),
             )
             for j, original in zip(parsed["work_experience"], resume.work_experience)
         ],
