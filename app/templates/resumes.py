@@ -2,55 +2,70 @@ from app.models.resume import EducationEntry, JobEntry, Resume
 
 
 originalResume = Resume(
-    full_name="Jesse Raffield",
-    email="jhraffield@gmail.com",
-    phone="850-227-8585",
-    linkedin="https://www.linkedin.com/in/jesse-raffield",
-    location="Wilson, NC",
-    headline="Senior Software Engineer",
-    summary="Senior software engineer with 7 years of experience delivering scalable, production-grade systems using .NET Core, C#, Python, and cloud-native technologies. Skilled in architecting microservices, optimizing performance, and building resilient APIs for real-world applications.",
-    technical_skills=["C#", ".NET Core", "Python", "C++", "SQL", "AWS", "Typescript", "Kafka", "Langchain", "NLP", "Docker", "scikit-learn", "gRPC", "REST", "Agile", "TDD"],
-    core_competencies=["Microservices Architecture", "API Development", "Cloud Infrastructure", "AI/ML Integration", "Agile Methodologies"],
+    full_name="Quasar McCodewrangler",
+    email="quantum.taco@spaceducks.io",
+    phone="555-867-5309",
+    linkedin="https://www.linkedin.com/in/quasar-mccodewrangler",
+    location="Gadgetopolis, ZZ",
+    headline="Intergalactic Software Sorcerer",
+    summary=(
+        "Veteran software conjurer with 7 light-years of experience building scalable, stardust-powered systems using "
+        "Arcane.NET, MoonPython, and hyperspace-native technologies. Specializes in architecting distributed microplanets, "
+        "taming chaos in quantum message queues, and brewing resilient APIs in the nebulae of production."
+    ),
+    technical_skills=[
+        "Arcane.NET", "MoonPython", "C+++", "SQL (Space Query Language)", "AWS (Astro Web Services)",
+        "TypeScripts of Fate", "Kafka the Log Wizard", "Langchain Lightning", "Nebular NLP",
+        "DockRockets", "Scikit-Sorcery", "gRPC (Galactic Remote Procedure Calls)", "REST (Really Elegant Space Transfers)", 
+        "Agile (like space cats)", "TDD (Test-Driven Dimension-hopping)"
+    ],
+    core_competencies=[
+        "Microplanetary Architecture",
+        "API Alchemy",
+        "Cloud Conjuring",
+        "AI/ML Mindmelds",
+        "Agile Time-Warping"
+    ],
     work_experience=[
         JobEntry(
-            title="Senior Software Engineer",
-            company="Chegg",
-            location="Santa Clara, CA",
-            dates="Mar 2024 – May 2025",
+            title="Senior Nebula Engineer",
+            company="AstroEd, Inc.",
+            location="Moonbase Lambda, Jupiter Orbit",
+            dates="Mar 3024 – May 3025",
             description=[
-                "Developed and maintained distributed services in C# and Python, ensuring high availability and fault tolerance.",
-                "Owned architecture and delivery of core backend services supporting Chegg's flagship AI Q&A platform.",
-                "Led design and deployment of Kafka-based pipelines and AWS-hosted infrastructure to handle millions of users.",
-                "Scoped, prototyped, and transitioned agentic LLM-based features from R&D into production."
+                "Maintained distributed comet-tracking services in MoonPython and Arcane.NET, ensuring uptime across solar storms.",
+                "Architected and deployed the core backend for AstroEd's AI knowledge replicator (codename: BrainCloud).",
+                "Led Kafka-based signal relay networks to broadcast answers across 42 star systems.",
+                "Transitioned experimental LLM sentience simulators from the R&D wormhole into stable multiverse production."
             ]
         ),
         JobEntry(
-            title="Software Engineer II",
-            company="Chegg",
-            location="Santa Clara, CA",
-            dates="Jun 2020 – Mar 2024",
+            title="Code Alchemist II",
+            company="AstroEd, Inc.",
+            location="Moonbase Lambda, Jupiter Orbit",
+            dates="Jun 3019 – Mar 3024",
             description=[
-                "Drove backend development for Chegg's first LLM-enabled product, coordinating across C# and TensorFlow services.",
-                "Took ownership of user-facing feature delivery pipelines, including routing logic and personalization systems.",
-                "Played a critical role in the technical integration of Mathway's codebase and infrastructure.",
-                "Led performance tuning and observability improvements that improved system reliability and response times."
+                "Piloted backend warp-core upgrades for the galaxy’s first LLM-powered tutoring pod.",
+                "Implemented personalized learning pathways for alien species across 3 dimensions.",
+                "Merged two sentient codebases (Cheggitron and Mathdroid) during the Great Refactor War of 3020.",
+                "Enhanced observability spells and removed gremlins from core services, reducing runtime wobbles."
             ]
         ),
         JobEntry(
-            title="R&D Software Engineer",
-            company="Mathway",
-            location="Bethlehem, PA",
-            dates="Oct 2018 – Jun 2020",
+            title="Trainee Code Wizard",
+            company="Mathdroid Research Collective",
+            location="Cactus Ring Station, Outer Rim",
+            dates="Oct 3017 – Jun 3019",
             description=[
-                "Designed and delivered backend APIs and internal tooling used across Mathway's mobile and web platforms.",
-                "Led integration of ML models into Mathway's C# service stack to improve solution accuracy and ranking.",
-                "Maintained and implemented C# microservices that are accessed by millions of real-time users.",
-                "Contributed to both backend resilience and customer-facing improvements through cross-platform collaboration."
+                "Crafted backend potions and data scrolls used by millions of interstellar students.",
+                "Integrated machine learning familiars into legacy systems using crystal C# runes.",
+                "Stabilized microservices responsible for asteroid-sized traffic loads.",
+                "Collaborated with both frontend illusionists and backend witches for total spell harmony."
             ]
         ),
     ],
     education=[
-        EducationEntry(degree="Masters of Science Physics", school="Lehigh University"),
-        EducationEntry(degree="Bachelors of Science Physics", school="Florida State University")
+        EducationEntry(degree="Master of Astrophysics and Spellcraft", school="Lehigh University"),
+        EducationEntry(degree="Bachelor of Quantum Broom Mechanics", school="Florida State University")
     ]
 )
