@@ -30,11 +30,13 @@ def format_experience_for_prompt(jobs: list[JobEntry]) -> str:
         for job in jobs
     )
 
-def resume_finetuning_prompt(job: JobPosting, resume: Resume) -> str:
+def resume_finetuning_prompt(job: JobPosting, resume: Resume, extra_commands: str) -> str:
     return f"""
     Given a job description and a candidate's resume, revise the resume to align with the job while being truthful and emphasizing real strengths.
     Make this resume as strong as you can for this position.
     Don't be too wordy with the job experience descriptions but try to pepper them with meaningful metrics
+
+    Extra overriding commands: {extra_commands}
 
     Here is the job description:
     <<<
@@ -113,4 +115,102 @@ def coverletter_prompt(job: JobPosting, resume: Resume) -> str:
     ❗ Generate only the body of the cover letter, starting from the salutation ("Dear [Hiring Manager],"). Do NOT include any placeholders like [Your Name], [Address], [Date], or any heading or contact information. Return only the letter text.
     ❗ “Do not include any sign-off or closing.
     
+    """
+
+def resume_parse_prompt(resume_text: str) -> str:
+    return f"""
+    You are a strict JSON data extractor.
+
+    Goal: Take a freeform resume text and return valid JSON that exactly matches this schema:
+
+    class JobEntry(BaseModel):
+        company: str
+        location: str
+        dates: str
+        title: str
+        description: list[str]
+
+    class EducationEntry(BaseModel):
+        degree: str
+        school: str
+
+    class Resume(BaseModel):
+        full_name: str
+        email: str
+        phone: str
+        linkedin: str
+        headline: str
+        location: str
+        summary: str
+        technical_skills: list[str]
+        core_competencies: list[str]
+        work_experience: list[JobEntry]
+        education: list[EducationEntry]
+
+        class Config:
+            extra = "forbid"
+
+    Rules:
+    1) Always include all fields in the output, even if empty ("" for strings, [] for lists).
+    2) Output ONLY valid JSON. No explanations, no commentary.
+    3) For description in each JobEntry, return a list of short bullet-style strings (no dashes or numbering).
+    4) If a field is missing in the input, use "" or [] accordingly.
+
+    Few-shot example:
+
+    Input:
+    \"\"\"
+    John Smith is a software engineer with 5 years of experience in backend development using Python and AWS.
+    Worked at TechCorp in New York from Jan 2020 to May 2023 as Senior Backend Engineer, leading a team of 5 to build microservices, optimize databases, and improve deployment pipelines.
+    Prior to that, worked at DataSys in Boston from Jun 2018 to Dec 2019 as Software Engineer, focusing on data processing scripts and API integrations.
+    BS in Computer Science from MIT.
+    \"\"\"
+
+    Output:
+    {{
+    "full_name": "John Smith",
+    "email": "",
+    "phone": "",
+    "linkedin": "",
+    "headline": "Software Engineer",
+    "location": "",
+    "summary": "Software engineer with 5 years of backend experience using Python and AWS.",
+    "technical_skills": ["Python", "AWS", "microservices", "databases", "deployment pipelines", "API integrations"],
+    "core_competencies": ["Backend Development", "Team Leadership", "Database Optimization", "API Integration"],
+    "work_experience": [
+        {{
+        "company": "TechCorp",
+        "location": "New York",
+        "dates": "Jan 2020 - May 2023",
+        "title": "Senior Backend Engineer",
+        "description": [
+            "Led a team of 5 to build microservices",
+            "Optimized databases",
+            "Improved deployment pipelines"
+        ]
+        }},
+        {{
+        "company": "DataSys",
+        "location": "Boston",
+        "dates": "Jun 2018 - Dec 2019",
+        "title": "Software Engineer",
+        "description": [
+            "Developed data processing scripts",
+            "Integrated APIs"
+        ]
+        }}
+    ],
+    "education": [
+        {{
+        "degree": "BS in Computer Science",
+        "school": "MIT"
+        }}
+    ]
+    }}
+
+    Now parse this resume text and return ONLY the JSON:
+
+    \"\"\"
+    {resume_text}
+    \"\"\"
     """

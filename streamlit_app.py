@@ -6,7 +6,7 @@ from app.models.resume import JobEntry, Resume
 import asyncio
 
 from app.services.job_scaper import extract_job_posting
-from app.services.resume_generator import get_resume_coverletter, get_resume_suggestions
+from app.services.resume_generator import get_resume_coverletter, get_resume_suggestions, parse_freeform_resume_to_model
 from app.services.resume_renderer import generate_coverletter_pdf, generate_resume_pdf
 
 from dotenv import load_dotenv
@@ -31,10 +31,24 @@ if "resume" not in st.session_state:
 job_url = st.text_input("Paste a job posting URL to tailor your resume:")
 job_text = st.text_area("Or paste the full job description here:", height=200)
 
-if (job_url or job_text) and st.button("Tailor Resume"):
+user_resume_text = st.text_area(
+    "Tell us about your work experience (paste bullets, accomplishments, tech stack, etc.)",
+    key="user_resume_text",
+    height=150,
+    help="This goes straight to the model to improve tailoring."
+)
+
+extra_commands = st.text_area("Additional commands to tweak resume", height=200)
+
+if ((job_url or job_text) and user_resume_text) and st.button("Tailor Resume"):
     try:
+        parsed_resume = asyncio.run(parse_freeform_resume_to_model(client, user_resume_text))
+
+        st.session_state.resume = parsed_resume
+        st.session_state.edited_resume = parsed_resume
+
         job_posting = asyncio.run(extract_job_posting(client, job_url, job_text))
-        updated_resume = asyncio.run(get_resume_suggestions(client, job_posting, st.session_state.resume))
+        updated_resume = asyncio.run(get_resume_suggestions(client, job_posting, st.session_state.resume, extra_commands))
         st.session_state.edited_resume = updated_resume
         st.session_state.job_posting = job_posting
 
